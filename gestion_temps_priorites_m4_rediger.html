@@ -1,0 +1,95 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rédiger sous contrainte de temps</title><style>
+:root{--fonce:#5E1349;--prune:#8C1E70;--clair:#F4E6EE;--rose:#C77BAA;--trame:#E8DCE5;--fond:#FAF6F8;--texte:#3C3C3C;--gris:#8A7A85;--ok:#2E7D4F;--ko:#B3261E;--bleu:#2F6DB3;--vert:#3C8D5A;--orange:#C77700}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--texte);background:var(--fond);font-size:15px;line-height:1.45}
+header{background:var(--fonce);color:#fff;padding:16px 22px}header .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#EAD3E3;font-weight:700}header h1{margin:4px 0 0;font-size:22px}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.contexte{background:#fff;border-left:5px solid var(--prune);padding:12px 16px;margin-bottom:14px}
+.contexte h2{margin:0 0 6px;font-size:17px;color:var(--fonce)}.contexte ul{margin:6px 0 0;padding-left:20px}
+.etapes{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}.etapes span{padding:6px 12px;border-radius:16px;background:#fff;border:1px solid var(--trame);font-size:13px;color:var(--gris)}
+.etapes span.on{background:var(--prune);color:#fff;border-color:var(--prune)}.etapes span.fait{background:var(--clair);color:var(--fonce)}
+.grille{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:860px){.grille{grid-template-columns:1fr}}
+.panneau{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px}
+.panneau h3{margin:0 0 10px;font-size:16px;color:var(--fonce)}
+.tache{border:1px solid var(--trame);border-radius:8px;padding:10px;margin-bottom:8px;background:#fff}
+.tache.placee{border-color:var(--prune);background:var(--clair)}.tache.fixe{background:#f3f0f2}
+.tache .nom{font-weight:700;color:var(--fonce)}.tache .nom input{width:100%;padding:6px;border:1px solid var(--trame);border-radius:4px;font:inherit}
+.ligne{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+select,button,input[type=text]{font:inherit}select{padding:5px;border:1px solid #cdbfc8;border-radius:4px;background:#fff}
+button{cursor:pointer;border:0;border-radius:6px;padding:7px 13px;background:var(--prune);color:#fff}
+button.sec{background:#fff;color:var(--prune);border:1px solid var(--prune)}button:disabled,select:disabled,input:disabled{opacity:.55;cursor:not-allowed}
+.badge{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--trame);color:var(--fonce)}
+.prio{font-size:13px;color:var(--fonce)}
+.jour{position:relative;margin-left:52px;border-left:2px solid var(--trame)}
+.h{position:absolute;left:-52px;width:calc(100% + 52px);border-top:1px solid var(--trame);font-size:12px;color:var(--gris)}
+.h span{position:relative;top:-8px;background:#fff;padding-right:4px}
+.ev{position:absolute;left:6px;right:6px;border-radius:6px;padding:3px 8px;font-size:12.5px;color:#fff;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ev b{display:block;font-size:13px}.ev.c-tache{background:var(--prune)}.ev.c-casting{background:var(--bleu)}.ev.c-autre{background:var(--vert)}.ev.c-pause{background:#9a8c95}.ev.c-imprevu{background:var(--orange)}.ev.c-fixe{background:#7a6a74}
+.ev.chev{outline:3px solid var(--ko)}.ev .cloche{float:right}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.verif{background:#fff;border:1px solid var(--trame);border-radius:8px;padding:12px 16px}
+.verif li{margin:5px 0;list-style:none;padding-left:4px}.verif ul{padding-left:0;margin:6px 0}
+.ok{color:var(--ok)}.ko{color:var(--ko)}
+.bilan{background:var(--clair);border:2px solid var(--prune);border-radius:8px;padding:12px 16px;margin-top:12px}
+.reporte{font-size:13px;color:var(--gris);margin-top:6px}
+footer{text-align:center;font-size:12px;color:var(--gris);padding:16px}
+
+.col{background:#f3eef1;border-radius:8px;padding:10px;min-height:220px}.col h4{margin:0 0 8px;color:var(--fonce)}.kb{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.kb{grid-template-columns:1fr}}
+.carte{background:#fff;border-radius:6px;padding:8px 10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);font-size:14px}.carte .bt{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}.carte .bt button{padding:3px 8px;font-size:12px}
+.etq{display:inline-block;background:var(--ko);color:#fff;font-size:11px;border-radius:8px;padding:1px 7px;margin-bottom:4px}.ech{font-size:12px;color:var(--fonce)}
+.champ{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.champ input[type=text]{flex:1;min-width:220px;padding:7px;border:1px solid #cdbfc8;border-radius:4px}
+.todo li{list-style:none;margin:6px 0}.todo{padding-left:0}.fait{text-decoration:line-through;color:var(--gris)}.note{background:#FFF8E1;border-left:4px solid #E0B000;padding:6px 10px;margin:6px 0;font-size:14px}
+.chrono{font-size:56px;font-weight:700;color:var(--fonce);text-align:center;font-variant-numeric:tabular-nums;margin:6px 0}
+.chrono.alerte{color:var(--ko)}textarea{width:100%;min-height:220px;font:inherit;padding:10px;border:1px solid #cdbfc8;border-radius:6px}
+.cpt{font-size:13px;color:var(--gris);text-align:right}.q{border-bottom:1px solid var(--trame);padding:10px 0}.q .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .opts label{border:1px solid var(--trame);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:14px;background:#fff}.q .opts input{margin-right:4px}
+.barre{height:16px;background:var(--trame);border-radius:8px;overflow:hidden}.barre div{height:100%;background:var(--prune)}
+.axe{margin:10px 0}.axe .l{display:flex;justify-content:space-between;font-weight:700;color:var(--fonce);margin-bottom:3px}
+.cmp td,.cmp th{padding:8px;border:1px solid var(--trame)}.cmp{border-collapse:collapse;width:100%;background:#fff}.cmp th{background:var(--fonce);color:#fff}
+label.bl{display:block;margin:8px 0 3px;font-weight:700;color:var(--fonce);font-size:14px}.f input,.f select{width:100%;padding:7px;border:1px solid #cdbfc8;border-radius:4px;font:inherit}</style><script src="jspdf.umd.min.js"></script><script src="justif.js"></script></head><body>
+<header><div class="k">Gestion du temps et des priorités · Module 4</div><h1>Rédiger sous contrainte de temps</h1></header><main><div class="etapes" id="etapes"></div><div class="contexte"><h2>NovaTech · la note pour Sophie</h2>
+<p>Vous travaillez chez NovaTech, une entreprise de conseil en innovation énergétique. Votre manager, Sophie, vous demande une <b>courte note de synthèse</b> pour un client, à partir des éléments ci-dessous.</p>
+<div class="box" style="background:#fff;border:1px solid var(--trame);border-radius:8px;padding:10px 14px"><b>Éléments à synthétiser — atelier « sobriété énergétique » du client Lumen (jeudi)</b><ul>
+<li>12 participants ; 3 sites représentés (Lille, Roubaix, Tourcoing).</li><li>Consommation électrique actuelle des trois sites : 840 MWh par an.</li>
+<li>Trois pistes retenues : éclairage LED, pilotage du chauffage, extinction des postes la nuit.</li><li>Économie estimée par l'équipe : 15 à 20 % sur un an.</li>
+<li>Prochaine étape : audit détaillé du site de Roubaix, à planifier en janvier.</li></ul></div>
+<p>Vous allez rédiger cette note <b>deux fois</b> : une première fois en <b>6 minutes</b>, puis une seconde fois en <b>2 minutes</b>. Le copier-coller est désactivé.</p></div>
+<div class="panneau"><div class="chrono" id="chrono">6:00</div><div class="actions" style="justify-content:center"><button id="go">Commencer la première rédaction (6 min)</button></div>
+<textarea id="txt" disabled placeholder="Votre note apparaîtra ici dès que le minuteur démarre."></textarea><div class="cpt" id="cpt">0 mot</div><div id="eval"></div></div>
+<div class="actions"><button class="sec" id="btnReset">Recommencer l'exercice</button></div><div id="retour"></div></main>
+<footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer><script>
+const $=s=>document.querySelector(s);const RAPIDE=new URLSearchParams(location.search).has('rapide');
+const mmss=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+function stocker(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}function lire(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+let etape=0,R=[],t=null;const DUREES=[360,120];
+const mots=s=>(s.trim().match(/\S+/g)||[]).length;
+['paste','drop'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.id==='txt'){e.preventDefault();alert('Le copier-coller est désactivé : rédigez directement.');}}));
+function init(){JUSTIF.vider();clearInterval(t);etape=0;R=[];prep();$('#retour').innerHTML='';}
+function prep(){$('#etapes').innerHTML=['Rédaction en 6 min','Rédaction en 2 min','Comparaison'].map((e,i)=>`<span class="${i===etape?'on':(i<etape?'fait':'')}">${i+1}. ${e}</span>`).join('');
+ if(etape>1)return;$('#chrono').textContent=mmss(DUREES[etape]);$('#chrono').classList.remove('alerte');$('#txt').value='';$('#txt').disabled=true;$('#cpt').textContent='0 mot';$('#eval').innerHTML='';
+ $('#go').style.display='';$('#go').disabled=false;$('#go').textContent=etape===0?'Commencer la première rédaction (6 min)':'Sophie revient : « J\'en ai besoin dans 2 minutes ! » — Commencer';}
+$('#txt').oninput=()=>{const n=mots($('#txt').value);$('#cpt').textContent=n+(n>1?' mots':' mot');};
+$('#go').onclick=()=>{$('#go').disabled=true;$('#txt').disabled=false;$('#txt').focus();let reste=DUREES[etape];const t0=Date.now();
+ const tick=()=>{$('#chrono').textContent=mmss(Math.max(reste,0));$('#chrono').classList.toggle('alerte',reste<=20);if(reste<=0){clearInterval(t);finir(DUREES[etape]);}reste--;};tick();t=setInterval(tick,RAPIDE?15:1000);
+ $('#eval').innerHTML='<div class="actions"><button class="sec" id="avant">J\'ai terminé avant la fin</button></div>';$('#avant').onclick=()=>{clearInterval(t);finir(Math.round((Date.now()-t0)/1000)*(RAPIDE?66:1));};};
+function finir(sec){$('#txt').disabled=true;$('#go').style.display='none';const n=mots($('#txt').value);
+ if(n<(etape?10:20)){alert(`Votre note est trop courte pour être comparée (${n} mots). Recommencez cette rédaction.`);prep();return;}
+ $('#eval').innerHTML=`<div class="bilan"><b>Rédaction terminée : ${n} mots.</b>
+ <div class="q">Êtes-vous satisfait(e) du résultat ?<div class="opts">${['Pas du tout','Peu','Assez','Tout à fait'].map((x,i)=>`<label><input type="radio" name="sat" value="${i+1}">${x}</label>`).join('')}</div></div>
+ <div class="q">Avez-vous ajouté des détails superflus ou passé du temps à peaufiner ?<div class="opts">${['Oui, beaucoup','Un peu','Non'].map((x,i)=>`<label><input type="radio" name="sup" value="${i}">${x}</label>`).join('')}</div></div>
+ <div class="q">Les cinq éléments clés figurent-ils dans votre note (participants, consommation, pistes, économie, prochaine étape) ?<div class="opts">${['Tous','Presque tous','Non'].map((x,i)=>`<label><input type="radio" name="cle" value="${i}">${x}</label>`).join('')}</div></div>
+ <div class="actions"><button id="ok">Valider</button></div></div>`;
+ $('#ok').onclick=()=>{const v=['sat','sup','cle'].map(k=>document.querySelector(`[name=${k}]:checked`));if(v.some(x=>!x)){alert('Répondez aux trois questions.');return;}
+  R.push({txt:$('#txt').value,n,sec,sat:+v[0].value,sup:+v[1].value,cle:+v[2].value});etape++;prep();if(etape===2)comparer();};}
+function comparer(){$('#txt').style.display='none';$('#cpt').style.display='none';$('#chrono').style.display='none';
+ const L=['Pas du tout','Peu','Assez','Tout à fait'],S=['Oui, beaucoup','Un peu','Non'],C=['Tous','Presque tous','Non'];
+ $('#eval').innerHTML=`<table class="cmp"><tr><th></th><th>En 6 minutes</th><th>En 2 minutes</th></tr>
+ <tr><td><b>Nombre de mots</b></td><td>${R[0].n}</td><td>${R[1].n}</td></tr><tr><td><b>Satisfaction</b></td><td>${L[R[0].sat-1]}</td><td>${L[R[1].sat-1]}</td></tr>
+ <tr><td><b>Détails superflus</b></td><td>${S[R[0].sup]}</td><td>${S[R[1].sup]}</td></tr><tr><td><b>Éléments clés présents</b></td><td>${C[R[0].cle]}</td><td>${C[R[1].cle]}</td></tr></table>
+ <div class="bilan"><b>Ce que montre l'exercice.</b> En 2 minutes, votre note compte ${R[1].n<R[0].n?`${R[0].n-R[1].n} mots de moins`:'autant de mots'}${R[1].cle<=R[0].cle?' et contient autant d\'éléments clés':''}. C'est la loi de Parkinson : le travail s'étale sur le temps qu'on lui donne. Avec une échéance courte et le « suffisant » défini à l'avance, l'essentiel tient souvent en beaucoup moins de temps. Attention cependant : une échéance trop courte peut faire oublier un élément important — d'où l'intérêt de lister les éléments clés avant de commencer.</div>
+ <div class="actions"><button disabled>Atelier validé</button></div>`;
+ JUSTIF.sections=R.map((r,i)=>({titre:i?'Rédaction en 2 minutes':'Rédaction en 6 minutes',lignes:['Note rédigée ('+r.n+' mots, '+Math.round(r.sec/6)/10+' min) :',r.txt,'Auto-évaluation : satisfaction « '+L[r.sat-1]+' » ; détails superflus « '+S[r.sup]+' » ; éléments clés « '+C[r.cle]+' ».']}));
+ JUSTIF.sections.push({titre:'Comparaison',bilan:document.querySelector('#eval .bilan').innerHTML});JUSTIF.bouton('#eval');}
+$('#btnReset').onclick=()=>{if(confirm('Recommencer tout l\'exercice ?')){$('#txt').style.display='';$('#cpt').style.display='';$('#chrono').style.display='';init();}};init();
+</script></body></html>
